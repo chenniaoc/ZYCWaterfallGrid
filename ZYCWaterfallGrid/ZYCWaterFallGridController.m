@@ -187,34 +187,6 @@
             }
 
             numberOfItems--;
-            /*
-            int debug = 0;
-            // depth start
-            if (isFirstLine) {
-                [columnCountTempArrayDepth addObject:[NSNumber numberWithFloat:yH]];
-            } else {
-                int minHeightIndex = 0;
-                for (NSInteger i = 0; i < columnCountTempArrayDepth.count; i++) {
-                    float tempHeight= [[columnCountTempArrayDepth objectAtIndex:i] floatValue];
-                    if (minHeight == 0 || minHeight > tempHeight) {
-                        minHeight = tempHeight;
-                        minHeightIndex = i;
-                    }
-                }
-                //[columnCountTempArrayDepth removeObjectAtIndex:minHeightIndex];
-                //[columnCountTempArrayDepth removeObjectAtIndex:minHeightIndex];
-                [columnCountTempArrayDepth replaceObjectAtIndex:minHeightIndex withObject:[NSNumber numberWithFloat:minHeight + _itemPadding + itemSize.height ]];
-                
-                //rearrange item position
-                CGRect tempFrame = simpleItem.frame;
-                debug = minHeightIndex;
-                tempFrame.origin.x =  _itemPadding + minHeightIndex * (itemSize.width + _itemPadding);
-                tempFrame.origin.y = minHeight;
-                simpleItem.frame = tempFrame;
-            }
-            
-            */
-            //depth end
         }
         
         numberOfSections--;

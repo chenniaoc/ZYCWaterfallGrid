@@ -86,8 +86,8 @@
                   continueAfterRunningActions = "No"
                   symbolName = "-[ZYCWaterFallGridController itemPadding]"
                   moduleName = "ZYCWaterfallGrid"
-                  urlString = "file:///Users/zhangyuchen/Develop/git/ZYCWaterfallGrid/ZYCWaterfallGrid/ZYCWaterFallGridController.h"
-                  timestampString = "411899891.691234"
+                  urlString = "file:///Users/zhangyuchen/Develop/ZYCWaterfallGrid/ZYCWaterfallGrid/ZYCWaterFallGridController.h"
+                  timestampString = "411901619.162354"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "41"
@@ -100,8 +100,8 @@
                   continueAfterRunningActions = "No"
                   symbolName = "-[ZYCWaterFallGridController setItemPadding:]"
                   moduleName = "ZYCWaterfallGrid"
-                  urlString = "file:///Users/zhangyuchen/Develop/git/ZYCWaterfallGrid/ZYCWaterfallGrid/ZYCWaterFallGridController.h"
-                  timestampString = "411899891.69165"
+                  urlString = "file:///Users/zhangyuchen/Develop/ZYCWaterfallGrid/ZYCWaterfallGrid/ZYCWaterFallGridController.h"
+                  timestampString = "411901619.162731"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "41"
@@ -153,102 +153,6 @@
             timestampString = "411900301.309683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "-reloadItems"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZYCWaterfallGrid/ZYCWaterFallGridController.m"
-            timestampString = "411900301.309683"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "-reloadItems"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZYCWaterfallGrid/ZYCWaterFallGridController.m"
-            timestampString = "411900301.309683"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
-            landmarkName = "-reloadItems"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZYCWaterfallGrid/ZYCWaterFallGridController.m"
-            timestampString = "411900301.309683"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
-            landmarkName = "-reloadItems"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZYCWaterfallGrid/ZYCWaterFallGridController.m"
-            timestampString = "411900301.309683"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
-            landmarkName = "-reloadItems"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZYCWaterfallGrid/ZYCWaterFallGridController.m"
-            timestampString = "411900301.309683"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
-            landmarkName = "-reloadItems"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ZYCWaterfallGrid/ZYCWaterFallGridController.m"
-            timestampString = "411900301.309683"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "162"
             endingLineNumber = "162"
             landmarkName = "-reloadItems"
@@ -274,7 +178,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ZYCWaterfallGrid/ZYCWaterFallGridController.m"
@@ -284,6 +188,22 @@
             startingLineNumber = "144"
             endingLineNumber = "144"
             landmarkName = "-reloadItems"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZYCWaterfallGrid/Examples/ZYCExampleViewController.m"
+            timestampString = "411901538.423624"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

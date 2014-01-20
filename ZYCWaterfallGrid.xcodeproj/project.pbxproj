@@ -21,6 +21,7 @@
 		893D86E5188910AC009B8BCA /* ZYCWaterfallGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D86E4188910AC009B8BCA /* ZYCWaterfallGridTests.m */; };
 		893D86F018891180009B8BCA /* ZYCWaterfallGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D86EF18891180009B8BCA /* ZYCWaterfallGridView.m */; };
 		893D86F3188911EB009B8BCA /* ZYCWaterFallGridController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893D86F2188911EB009B8BCA /* ZYCWaterFallGridController.m */; };
+		898C8ADC188D1C18005B7738 /* ZYCExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898C8ADB188D1C18005B7738 /* ZYCExampleViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		893D86EF18891180009B8BCA /* ZYCWaterfallGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYCWaterfallGridView.m; sourceTree = "<group>"; };
 		893D86F1188911EB009B8BCA /* ZYCWaterFallGridController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYCWaterFallGridController.h; sourceTree = "<group>"; };
 		893D86F2188911EB009B8BCA /* ZYCWaterFallGridController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYCWaterFallGridController.m; sourceTree = "<group>"; };
+		898C8ADA188D1C18005B7738 /* ZYCExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYCExampleViewController.h; sourceTree = "<group>"; };
+		898C8ADB188D1C18005B7738 /* ZYCExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYCExampleViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,7 @@
 		893D86C5188910AB009B8BCA /* ZYCWaterfallGrid */ = {
 			isa = PBXGroup;
 			children = (
+				898C8AD9188D1C03005B7738 /* Examples */,
 				893D86CE188910AB009B8BCA /* ZYCAppDelegate.h */,
 				893D86CF188910AC009B8BCA /* ZYCAppDelegate.m */,
 				893D86D1188910AC009B8BCA /* Images.xcassets */,
@@ -152,6 +156,15 @@
 				893D86E1188910AC009B8BCA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		898C8AD9188D1C03005B7738 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				898C8ADA188D1C18005B7738 /* ZYCExampleViewController.h */,
+				898C8ADB188D1C18005B7738 /* ZYCExampleViewController.m */,
+			);
+			path = Examples;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,6 +265,7 @@
 			files = (
 				893D86F018891180009B8BCA /* ZYCWaterfallGridView.m in Sources */,
 				893D86F3188911EB009B8BCA /* ZYCWaterFallGridController.m in Sources */,
+				898C8ADC188D1C18005B7738 /* ZYCExampleViewController.m in Sources */,
 				893D86CC188910AB009B8BCA /* main.m in Sources */,
 				893D86D0188910AC009B8BCA /* ZYCAppDelegate.m in Sources */,
 			);
@@ -460,6 +474,7 @@
 				893D86EA188910AC009B8BCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		893D86EB188910AC009B8BCA /* Build configuration list for PBXNativeTarget "ZYCWaterfallGridTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +483,7 @@
 				893D86ED188910AC009B8BCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

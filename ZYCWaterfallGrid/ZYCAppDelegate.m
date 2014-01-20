@@ -17,7 +17,8 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    self.window.rootViewController = [[ZYCWaterFallGridController alloc] initWithArrangeDirection:ZYCArrangeDirectionBreadth];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[ZYCExampleViewController alloc] init]];
+    self.window.rootViewController = navigationController;
     return YES;
 }
 

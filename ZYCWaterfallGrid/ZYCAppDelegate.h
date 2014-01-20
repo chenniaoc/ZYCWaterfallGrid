@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZYCExampleViewController.h"
 
 @interface ZYCAppDelegate : UIResponder <UIApplicationDelegate>
 
