@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, ZYCArrangeDirection)
+{
+    ZYCArrangeDirectionDepth = 1,
+    ZYCArrangeDirectionBreadth = 2,
+};
+
 @class ZYCWaterfallGridView;
 
 
@@ -30,7 +36,10 @@
 
 @interface ZYCWaterFallGridController : UIViewController <UIScrollViewDelegate>
 
-@property (nonatomic,assign) CGFloat itemPadding;
+- (instancetype)initWithArrangeDirection:(ZYCArrangeDirection) arrangeDirection;
+
+@property (nonatomic, assign) CGFloat itemPadding;
+@property (nonatomic, assign, readonly) ZYCArrangeDirection arrangeDirection;
 
 
 @property (nonatomic, strong) ZYCWaterfallGridView *waterfallGridView;

@@ -11,11 +11,13 @@
 
 @interface ZYCWaterFallGridController ()
 
+@property (nonatomic, assign, readwrite) ZYCArrangeDirection arrangeDirection;
+
 @end
 
 @implementation ZYCWaterFallGridController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -24,7 +26,16 @@
     return self;
 }
 
-- (id)init
+- (instancetype)initWithArrangeDirection:(ZYCArrangeDirection) arrangeDirection
+{
+    self = [self init];
+    if (self) {
+        _arrangeDirection = arrangeDirection;
+    }
+    return self;
+}
+
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -75,8 +86,10 @@
     
     float totalContentHeght = 0;
     float minHeight = 0;
-    
+    BOOL isFirstLine = YES;
     int degbugCounter = 0;
+    
+    
     while (numberOfSections > 0) {
         
         NSInteger numberOfItems = [self.dataSource waterfallGridView:self.waterfallGridView numberOfItemsInSection:numberOfSections];
@@ -89,17 +102,18 @@
         int previousColumnCount = 0;
         NSMutableArray *columnCountArray = [NSMutableArray array];
         NSMutableArray *columnCountTempArray = nil;
+        NSMutableArray *columnCountTempArrayDepth = [NSMutableArray array];
         while (numberOfItems > 0) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfItems inSection:numberOfSections];
             
             int randomHeight = arc4random() % 180 ;
             randomHeight = randomHeight > 150 ? randomHeight: randomHeight + 150;
             //randomHeight = 180;
-            CGSize itemSize = CGSizeMake(100,randomHeight);//[self.delegate waterfallGridView:self.waterfallGridView sizeForItemAtIndexPath:indexPath];
+            CGSize itemSize = [self.delegate waterfallGridView:self.waterfallGridView sizeForItemAtIndexPath:indexPath];
+            //default value if itemSize was not set,yet.
+            itemSize = itemSize.height == 0 && itemSize.width == 0?CGSizeMake(100,randomHeight):itemSize;
             
-            //NSMutableArray *columnCountTempArray = nil;
             //recaculate from zero if xH will out of screen
-            BOOL newlineDid = NO;
             if (xH + _itemPadding + itemSize.width >= screenWidth) {
                 xH = 0 + _itemPadding;
                 [columnCountTempArray removeAllObjects];
@@ -107,41 +121,100 @@
                 columnCountTempArray = [NSMutableArray arrayWithArray:columnCountArray];//[columnCountArray copy];
                 [columnCountArray removeAllObjects];
                 previousColumnCount = 0;
-                newlineDid = YES;
+                isFirstLine = NO;
             }
             
-            //yH = [[columnCountTempArray objectAtIndex:previousColumnCount] floatValue];
             
-            int minHeight = 0;
-            if (columnCountTempArray) {
-                minHeight = [[columnCountTempArray firstObject] intValue];
-                for (NSNumber *heightTemp in columnCountTempArray) {
-                    int heightTempInt = [heightTemp intValue];
-                    minHeight = minHeight > heightTempInt? heightTempInt:minHeight;
+            float axisXOfItem = 0;
+            float axisYOfItem = 0;
+            
+            
+            if (self.arrangeDirection == ZYCArrangeDirectionBreadth) {
+                axisXOfItem = xH;
+                axisYOfItem = columnCountTempArray == nil ? _itemPadding:[[columnCountTempArray objectAtIndex:previousColumnCount] floatValue];
+                
+                yH = axisYOfItem + _itemPadding + itemSize.height;
+                xH += _itemPadding + itemSize.width;
+                
+                [columnCountArray addObject:[NSNumber numberWithFloat:yH]];
+                previousColumnCount++;
+                
+            } else if (self.arrangeDirection == ZYCArrangeDirectionDepth){
+                
+                if (isFirstLine) {
+                    axisXOfItem = xH;
+                    axisYOfItem = _itemPadding;
+
+                    yH = axisYOfItem + _itemPadding + itemSize.height;
+                    xH += _itemPadding + itemSize.width;
+                    [columnCountTempArrayDepth addObject:[NSNumber numberWithFloat:yH]];
+                } else {
+                    int minHeightIndex = 0;
+                    for (NSInteger i = 0; i < columnCountTempArrayDepth.count; i++) {
+                        float tempHeight= [[columnCountTempArrayDepth objectAtIndex:i] floatValue];
+                        if (minHeight == 0 || minHeight > tempHeight) {
+                            minHeight = tempHeight;
+                            minHeightIndex = i;
+                        }
+                    }
+                    [columnCountTempArrayDepth replaceObjectAtIndex:minHeightIndex withObject:[NSNumber numberWithFloat:minHeight + _itemPadding + itemSize.height ]];
+                    
+                    axisXOfItem =  _itemPadding + minHeightIndex * (itemSize.width + _itemPadding);
+                    axisYOfItem = minHeight;
+                    
+                    yH = minHeight + _itemPadding + itemSize.height;
+                    minHeight = 0;
                 }
+                
+            } else {
+                NSException *expcetion = [NSException exceptionWithName:NSInvalidArgumentException reason:@"" userInfo:nil];
+                [expcetion raise];
             }
-            
             //caculate coordinate for each item
-            float axisXOfItem = xH;
-            float axisYOfItem = columnCountTempArray == nil ? _itemPadding:[[columnCountTempArray objectAtIndex:previousColumnCount] floatValue];
             
+            // for test useage
             UILabel *simpleItem = [[UILabel alloc] initWithFrame:CGRectMake(axisXOfItem, axisYOfItem, itemSize.width, itemSize.height)];
             
             simpleItem.backgroundColor = [UIColor blueColor];
             simpleItem.textAlignment = NSTextAlignmentCenter;
-            simpleItem.text = [NSString stringWithFormat:@"%d %d",++degbugCounter,minHeight];
-            
-            
+            simpleItem.text = [NSString stringWithFormat:@"%d %.0f",++degbugCounter,minHeight];
             [self.waterfallGridView addSubview:simpleItem];
             
-            yH = axisYOfItem + _itemPadding + itemSize.height;
-            xH += _itemPadding + itemSize.width;
+            
+            // caculate contentsize of scrollview
             if (totalContentHeght < yH) {
                 totalContentHeght = yH;
             }
-            [columnCountArray addObject:[NSNumber numberWithFloat:yH]];
+
             numberOfItems--;
-            previousColumnCount++;
+            /*
+            int debug = 0;
+            // depth start
+            if (isFirstLine) {
+                [columnCountTempArrayDepth addObject:[NSNumber numberWithFloat:yH]];
+            } else {
+                int minHeightIndex = 0;
+                for (NSInteger i = 0; i < columnCountTempArrayDepth.count; i++) {
+                    float tempHeight= [[columnCountTempArrayDepth objectAtIndex:i] floatValue];
+                    if (minHeight == 0 || minHeight > tempHeight) {
+                        minHeight = tempHeight;
+                        minHeightIndex = i;
+                    }
+                }
+                //[columnCountTempArrayDepth removeObjectAtIndex:minHeightIndex];
+                //[columnCountTempArrayDepth removeObjectAtIndex:minHeightIndex];
+                [columnCountTempArrayDepth replaceObjectAtIndex:minHeightIndex withObject:[NSNumber numberWithFloat:minHeight + _itemPadding + itemSize.height ]];
+                
+                //rearrange item position
+                CGRect tempFrame = simpleItem.frame;
+                debug = minHeightIndex;
+                tempFrame.origin.x =  _itemPadding + minHeightIndex * (itemSize.width + _itemPadding);
+                tempFrame.origin.y = minHeight;
+                simpleItem.frame = tempFrame;
+            }
+            
+            */
+            //depth end
         }
         
         numberOfSections--;
