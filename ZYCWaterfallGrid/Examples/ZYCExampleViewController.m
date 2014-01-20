@@ -81,6 +81,7 @@
         case 0:
         {
             waterFall = [[ZYCWaterFallGridController alloc] initWithArrangeDirection:ZYCArrangeDirectionBreadth];
+            break;
         }
         case 1:
         {
@@ -90,6 +91,34 @@
             break;
     }
     
+    waterFall.delegate = self;
+    
     [self.navigationController pushViewController:waterFall animated:YES];
 }
+
+
+-(CGSize)waterfallGridView:(ZYCWaterfallGridView *)waterfallGridView sizeForItemAtIndexPath:(NSIndexPath *)path
+{
+    int randomHeight = arc4random() % 180 ;
+    randomHeight = randomHeight > 150 ? randomHeight: randomHeight + 150;
+    
+    //randomHeight = 180;
+    CGSize itemSize = CGSizeMake(60,randomHeight);
+    //default value if itemSize was not set,yet.
+    //itemSize = itemSize.height == 0 && itemSize.width == 0?CGSizeMake(100,randomHeight):itemSize;
+    return itemSize;
+}
+
+- (UIView *)waterfallGridView:(ZYCWaterfallGridView *)waterfallGridView ViewForItemAtIndexPath:(NSIndexPath *)path
+{
+    UILabel *simpleItem = [[UILabel alloc] init];
+    //simpleItem.text = @"test";
+    simpleItem.backgroundColor = [UIColor blueColor];
+    simpleItem.textAlignment = NSTextAlignmentCenter;
+    simpleItem.text = [NSString stringWithFormat:@"number:%d",[path row]];
+    return simpleItem;
+}
+
+
+
 @end

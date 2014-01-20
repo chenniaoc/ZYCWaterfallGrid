@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 typedef NS_ENUM(NSInteger, ZYCArrangeDirection)
 {
     ZYCArrangeDirectionDepth = 1,
@@ -20,6 +21,8 @@ typedef NS_ENUM(NSInteger, ZYCArrangeDirection)
 @protocol ZYCWaterfallGridViewDelegate <NSObject>
 
 - (CGSize)waterfallGridView:(ZYCWaterfallGridView *)waterfallGridView sizeForItemAtIndexPath:(NSIndexPath *)path;
+
+- (UIView *)waterfallGridView:(ZYCWaterfallGridView *)waterfallGridView ViewForItemAtIndexPath:(NSIndexPath *)path;
 
 @end
 

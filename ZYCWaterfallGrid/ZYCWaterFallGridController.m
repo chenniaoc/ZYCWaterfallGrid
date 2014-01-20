@@ -87,8 +87,6 @@
     float totalContentHeght = 0;
     float minHeight = 0;
     BOOL isFirstLine = YES;
-    int degbugCounter = 0;
-    
     
     while (numberOfSections > 0) {
         
@@ -98,20 +96,16 @@
             numberOfItems = 200;
         }
         
+        NSInteger rowCounter = 0;
+        
         float xH = 0 + _itemPadding;
         int previousColumnCount = 0;
         NSMutableArray *columnCountArray = [NSMutableArray array];
         NSMutableArray *columnCountTempArray = nil;
         NSMutableArray *columnCountTempArrayDepth = [NSMutableArray array];
         while (numberOfItems > 0) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfItems inSection:numberOfSections];
-            
-            int randomHeight = arc4random() % 180 ;
-            randomHeight = randomHeight > 150 ? randomHeight: randomHeight + 150;
-            //randomHeight = 180;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowCounter++ inSection:numberOfSections];
             CGSize itemSize = [self.delegate waterfallGridView:self.waterfallGridView sizeForItemAtIndexPath:indexPath];
-            //default value if itemSize was not set,yet.
-            itemSize = itemSize.height == 0 && itemSize.width == 0?CGSizeMake(100,randomHeight):itemSize;
             
             //recaculate from zero if xH will out of screen
             if (xH + _itemPadding + itemSize.width >= screenWidth) {
@@ -173,12 +167,10 @@
             //caculate coordinate for each item
             
             // for test useage
-            UILabel *simpleItem = [[UILabel alloc] initWithFrame:CGRectMake(axisXOfItem, axisYOfItem, itemSize.width, itemSize.height)];
-            
-            simpleItem.backgroundColor = [UIColor blueColor];
-            simpleItem.textAlignment = NSTextAlignmentCenter;
-            simpleItem.text = [NSString stringWithFormat:@"%d %.0f",++degbugCounter,minHeight];
-            [self.waterfallGridView addSubview:simpleItem];
+            UIView *itemView = [self.delegate waterfallGridView:self.waterfallGridView ViewForItemAtIndexPath:indexPath];
+            itemView.frame = CGRectMake(axisXOfItem, axisYOfItem, itemSize.width, itemSize.height);
+
+            [self.waterfallGridView addSubview:itemView];
             
             
             // caculate contentsize of scrollview

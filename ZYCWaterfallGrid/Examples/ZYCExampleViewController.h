@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ZYCWaterFallGridController.h"
 
-@interface ZYCExampleViewController : UITableViewController
+@interface ZYCExampleViewController : UITableViewController <ZYCWaterfallGridViewDelegate,ZYCWaterfallGridViewDataSource>
 
 @end
