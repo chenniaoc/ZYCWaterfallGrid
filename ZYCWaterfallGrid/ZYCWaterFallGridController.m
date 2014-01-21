@@ -6,12 +6,56 @@
 //  Copyright (c) 2014年 zhangyuchen. All rights reserved.
 //
 
+#import <objc/runtime.h>
+
 #import "ZYCWaterFallGridController.h"
 #import "ZYCWaterfallGridView.h"
+
+
+//static char * const kPositionCachesKey;
+//CGRect *positionCaches = NULL;
+
+typedef struct ZYCRectArray {
+    CGRect *rects;
+    int used;
+    int size;
+}ZYCRectArray;
+static const int kDefaultArrayInitSize = 50;
+static const int kDefaultArrayGrowthFactor = 2;
+void initArray(ZYCRectArray *array)
+{
+    array->rects = malloc(sizeof(CGRect) * kDefaultArrayInitSize);
+    array->used = 0;
+    array->size = kDefaultArrayInitSize;
+}
+
+void insertArray(ZYCRectArray *array,CGRect aRect)
+{
+    if (array->used >= array->size) {
+        array->size = array->size * kDefaultArrayGrowthFactor;
+        array->rects = (CGRect *)realloc(array->rects ,sizeof(CGRect) * array->size);
+        NSLog(@"reallocated memory");
+    }
+    array->rects[array->used++] = aRect;
+}
+
+void freeArray(ZYCRectArray *array)
+{
+    free(array->rects);
+    free(array);
+}
+
+
 
 @interface ZYCWaterFallGridController ()
 
 @property (nonatomic, assign, readwrite) ZYCArrangeDirection arrangeDirection;
+@property (nonatomic, assign) CGFloat screenWidth;
+@property (nonatomic, assign) CGFloat screenHeight;
+@property (nonatomic, assign) ZYCRectArray *positionCaches;
+
+
+- (BOOL)isOnScreenWithRect:(CGRect) rect;
 
 @end
 
@@ -40,6 +84,8 @@
     self = [super init];
     if (self) {
         _itemPadding = 3;
+        _positionCaches = (ZYCRectArray *)malloc(sizeof(ZYCRectArray));
+        initArray(_positionCaches);
     }
     return self;
 }
@@ -48,6 +94,11 @@
 {
     self.waterfallGridView = [[ZYCWaterfallGridView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     self.view = self.waterfallGridView;
+    _waterfallGridView.delegate = self;
+    
+    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
+    _screenWidth = CGRectGetWidth(applicationFrame);
+    _screenHeight = CGRectGetHeight(applicationFrame);
     
 }
 
@@ -59,9 +110,16 @@
 
 }
 
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    freeArray(_positionCaches);
     // Dispose of any resources that can be recreated.
 }
 
@@ -69,7 +127,8 @@
 #pragma mark ScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
+    NSLog(@"scrollViewDidScroll");
+    //[self reloadItems];
 }
 
 
@@ -80,10 +139,8 @@
     if (!numberOfSections) {
         numberOfSections = 1;
     }
-    CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
-    CGFloat screenWidth = CGRectGetWidth(applicationFrame);
-    float yH = 0 + _itemPadding;
     
+    float yH = 0 + _itemPadding;
     float totalContentHeght = 0;
     float minHeight = 0;
     BOOL isFirstLine = YES;
@@ -107,8 +164,8 @@
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowCounter++ inSection:numberOfSections];
             CGSize itemSize = [self.delegate waterfallGridView:self.waterfallGridView sizeForItemAtIndexPath:indexPath];
             
-            //recaculate from zero if xH will out of screen
-            if (xH + _itemPadding + itemSize.width >= screenWidth) {
+            //recaculate from zero if xH will be placed out of screen
+            if (xH + _itemPadding + itemSize.width >= _screenWidth) {
                 xH = 0 + _itemPadding;
                 [columnCountTempArray removeAllObjects];
                 columnCountTempArray = nil;
@@ -169,8 +226,15 @@
             // for test useage
             UIView *itemView = [self.delegate waterfallGridView:self.waterfallGridView ViewForItemAtIndexPath:indexPath];
             itemView.frame = CGRectMake(axisXOfItem, axisYOfItem, itemSize.width, itemSize.height);
+            //*tempPositionPtr++ = itemView.frame;
+            insertArray(_positionCaches, itemView.frame);
+            
 
-            [self.waterfallGridView addSubview:itemView];
+            NSLog(@"%d",[self isOnScreenWithRect:itemView.frame]);
+            if ([self isOnScreenWithRect:itemView.frame]) {
+                [self.waterfallGridView addSubview:itemView];
+            }
+            //[self.waterfallGridView addSubview:itemView];
             
             
             // caculate contentsize of scrollview
@@ -184,9 +248,24 @@
         numberOfSections--;
     }
     
-    self.waterfallGridView.contentSize = CGSizeMake(320,totalContentHeght);
+    self.waterfallGridView.contentSize = CGSizeMake(self.waterfallGridView.bounds.size.width,totalContentHeght);
+}
+
+
+- (BOOL)isOnScreenWithRect:(CGRect) rect
+{
+    CGPoint contentOffset = self.waterfallGridView.contentOffset;
+    CGPoint targetPosition = rect.origin;
     
+    //horizontal test
+    if (contentOffset.x > targetPosition.x) return NO;
+    if (contentOffset.x + _screenWidth < targetPosition.x) return NO;
     
+    //vertical test
+    if (contentOffset.y > targetPosition.y) return NO;
+    if (contentOffset.y + _screenHeight < targetPosition.y) return NO;
+    
+    return YES;
 }
 
 

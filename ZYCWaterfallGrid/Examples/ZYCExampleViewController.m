@@ -99,13 +99,14 @@
 
 -(CGSize)waterfallGridView:(ZYCWaterfallGridView *)waterfallGridView sizeForItemAtIndexPath:(NSIndexPath *)path
 {
-    int randomHeight = arc4random() % 180 ;
+    static dispatch_once_t onceToken;
+    __block int randomHeight = arc4random() % 300 ;
     randomHeight = randomHeight > 150 ? randomHeight: randomHeight + 150;
-    
-    //randomHeight = 180;
-    CGSize itemSize = CGSizeMake(60,randomHeight);
-    //default value if itemSize was not set,yet.
-    //itemSize = itemSize.height == 0 && itemSize.width == 0?CGSizeMake(100,randomHeight):itemSize;
+    dispatch_once(&onceToken, ^{
+        // for boundary value cases
+        randomHeight = 5000;
+    });
+    CGSize itemSize = CGSizeMake(102,randomHeight);
     return itemSize;
 }
 
