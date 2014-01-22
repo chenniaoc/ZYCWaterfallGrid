@@ -83,7 +83,8 @@ void freeArray(ZYCRectArray *array)
 {
     self = [super init];
     if (self) {
-        _itemPadding = 3;
+        _itemVerticalPadding = 3;
+        _itemHorizontalPadding = 3;
         _positionCaches = (ZYCRectArray *)malloc(sizeof(ZYCRectArray));
         initArray(_positionCaches);
     }
@@ -140,7 +141,7 @@ void freeArray(ZYCRectArray *array)
         numberOfSections = 1;
     }
     
-    float yH = 0 + _itemPadding;
+    float yH = 0 + _itemVerticalPadding;
     float totalContentHeght = 0;
     float minHeight = 0;
     BOOL isFirstLine = YES;
@@ -155,7 +156,7 @@ void freeArray(ZYCRectArray *array)
         
         NSInteger rowCounter = 0;
         
-        float xH = 0 + _itemPadding;
+        float xH = 0 + _itemHorizontalPadding;
         int previousColumnCount = 0;
         NSMutableArray *columnCountArray = [NSMutableArray array];
         NSMutableArray *columnCountTempArray = nil;
@@ -165,8 +166,8 @@ void freeArray(ZYCRectArray *array)
             CGSize itemSize = [self.delegate waterfallGridView:self.waterfallGridView sizeForItemAtIndexPath:indexPath];
             
             //recaculate from zero if xH will be placed out of screen
-            if (xH + _itemPadding + itemSize.width >= _screenWidth) {
-                xH = 0 + _itemPadding;
+            if (xH + _itemHorizontalPadding + itemSize.width >= _screenWidth) {
+                xH = 0 + _itemHorizontalPadding;
                 [columnCountTempArray removeAllObjects];
                 columnCountTempArray = nil;
                 columnCountTempArray = [NSMutableArray arrayWithArray:columnCountArray];//[columnCountArray copy];
@@ -182,10 +183,10 @@ void freeArray(ZYCRectArray *array)
             
             if (self.arrangeDirection == ZYCArrangeDirectionBreadth) {
                 axisXOfItem = xH;
-                axisYOfItem = columnCountTempArray == nil ? _itemPadding:[[columnCountTempArray objectAtIndex:previousColumnCount] floatValue];
+                axisYOfItem = columnCountTempArray == nil ? _itemVerticalPadding:[[columnCountTempArray objectAtIndex:previousColumnCount] floatValue];
                 
-                yH = axisYOfItem + _itemPadding + itemSize.height;
-                xH += _itemPadding + itemSize.width;
+                yH = axisYOfItem + _itemVerticalPadding + itemSize.height;
+                xH += _itemHorizontalPadding + itemSize.width;
                 
                 [columnCountArray addObject:[NSNumber numberWithFloat:yH]];
                 previousColumnCount++;
@@ -194,10 +195,10 @@ void freeArray(ZYCRectArray *array)
                 
                 if (isFirstLine) {
                     axisXOfItem = xH;
-                    axisYOfItem = _itemPadding;
+                    axisYOfItem = _itemVerticalPadding;
 
-                    yH = axisYOfItem + _itemPadding + itemSize.height;
-                    xH += _itemPadding + itemSize.width;
+                    yH = axisYOfItem + _itemVerticalPadding + itemSize.height;
+                    xH += _itemHorizontalPadding + itemSize.width;
                     [columnCountTempArrayDepth addObject:[NSNumber numberWithFloat:yH]];
                 } else {
                     int minHeightIndex = 0;
@@ -208,12 +209,12 @@ void freeArray(ZYCRectArray *array)
                             minHeightIndex = i;
                         }
                     }
-                    [columnCountTempArrayDepth replaceObjectAtIndex:minHeightIndex withObject:[NSNumber numberWithFloat:minHeight + _itemPadding + itemSize.height ]];
+                    [columnCountTempArrayDepth replaceObjectAtIndex:minHeightIndex withObject:[NSNumber numberWithFloat:minHeight + _itemVerticalPadding + itemSize.height ]];
                     
-                    axisXOfItem =  _itemPadding + minHeightIndex * (itemSize.width + _itemPadding);
+                    axisXOfItem =  _itemHorizontalPadding + minHeightIndex * (itemSize.width + _itemHorizontalPadding);
                     axisYOfItem = minHeight;
                     
-                    yH = minHeight + _itemPadding + itemSize.height;
+                    yH = minHeight + _itemVerticalPadding + itemSize.height;
                     minHeight = 0;
                 }
                 
@@ -232,9 +233,9 @@ void freeArray(ZYCRectArray *array)
 
             NSLog(@"%d",[self isOnScreenWithRect:itemView.frame]);
             if ([self isOnScreenWithRect:itemView.frame]) {
-                [self.waterfallGridView addSubview:itemView];
+                //[self.waterfallGridView addSubview:itemView];
             }
-            //[self.waterfallGridView addSubview:itemView];
+            [self.waterfallGridView addSubview:itemView];
             
             
             // caculate contentsize of scrollview
@@ -268,6 +269,11 @@ void freeArray(ZYCRectArray *array)
     return YES;
 }
 
+
+- (void)dealloc
+{
+    freeArray(_positionCaches);
+}
 
 
 @end

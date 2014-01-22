@@ -42,6 +42,8 @@ typedef NS_ENUM(NSInteger, ZYCArrangeDirection)
 - (instancetype)initWithArrangeDirection:(ZYCArrangeDirection) arrangeDirection;
 
 @property (nonatomic, assign) CGFloat itemPadding;
+@property (nonatomic, assign) CGFloat itemHorizontalPadding;
+@property (nonatomic, assign) CGFloat itemVerticalPadding;
 @property (nonatomic, assign, readonly) ZYCArrangeDirection arrangeDirection;
 
 

@@ -90,7 +90,8 @@
         default:
             break;
     }
-    
+    waterFall.itemVerticalPadding = 2;
+    waterFall.itemVerticalPadding = 5;
     waterFall.delegate = self;
     
     [self.navigationController pushViewController:waterFall animated:YES];
